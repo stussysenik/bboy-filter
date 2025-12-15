@@ -1,0 +1,116 @@
+/* Reset & Fullscreen */
+:root {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+}
+
+body,
+html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* No scrolling allowed */
+        background-color: black;
+        position: fixed;
+        /* Prevent scroll bounce on mobile/mac */
+}
+
+#app {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        /* Flexbox for centering children if needed */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+/* Video & Canvas layer management */
+#webcam {
+        /* Basic reset, container handles hiding */
+        display: block;
+}
+
+#output_canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensure aspect ratio fills if CSS resizing happens */
+
+        /* Mirroring removed per user request for "normal video" feed. */
+        /* transform: scaleX(-1); */
+}
+
+/* UI Overlay */
+#ui-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        /* Let clicks pass through to canvas if needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        /* Controls at bottom */
+        align-items: center;
+        padding-bottom: 50px;
+}
+
+/* Record Button - Enhanced for Mobile */
+.record-btn {
+        pointer-events: auto;
+        width: 80px;
+        /* Larger touch target */
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.25);
+        /* Subtle ring */
+        border: 5px solid white;
+        /* Distinct border */
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        margin-bottom: 40px;
+        /* Lift up from bottom edge */
+}
+
+/* Ensure recording state is very obvious */
+.record-btn:active {
+        transform: scale(0.9);
+}
+
+.record-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        /* Big red circle */
+        height: 64px;
+        background-color: #ff3b30;
+        /* iOS standard red */
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.record-btn.recording::after {
+        border-radius: 8px;
+        /* Square stop */
+        transform: translate(-50%, -50%) scale(0.5);
+        background-color: #ff3b30;
+}
+
+.record-btn.recording {
+        border-color: rgba(255, 255, 255, 1);
+        background-color: rgba(255, 255, 255, 0);
+}

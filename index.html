@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAG OF POTATOES</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Robust hidden container for video source -->
+    <div id="video-container"
+      style="position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; z-index: -999;">
+      <video id="webcam" autoplay playsinline muted></video>
+    </div>
+
+    <!-- Canvas for Three.js rendering -->
+    <canvas id="output_canvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="ui-layer">
+      <button id="record-btn" class="record-btn"></button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
