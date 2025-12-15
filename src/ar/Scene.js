@@ -38,7 +38,7 @@ export class Scene {
                 // Text Sprite
                 this.textSprite = this.createTextSprite("NOD TO START");
                 this.filterGroup.add(this.textSprite);
-                this.textSprite.position.y = 10; // Offset above head (approx, will tune)
+                this.textSprite.position.y = 2; // Offset above head (approx, will tune)
 
                 // Resize Handler
                 window.addEventListener('resize', this.onResize.bind(this));
@@ -125,7 +125,7 @@ export class Scene {
                 // Simple White Arial Text
                 const centerX = canvas.width / 2;
                 const centerY = canvas.height / 2;
-                const fontSize = 110; // Slightly smaller to ensure fit
+                const fontSize = 120; // Slightly smaller to ensure fit
 
                 ctx.font = `bold ${fontSize}px Arial, sans-serif`;
                 ctx.textAlign = 'center';
@@ -148,7 +148,7 @@ export class Scene {
                 const sprite = new THREE.Sprite(material);
 
                 // Scale sprite
-                const width = 22; // Wider in 3D space too
+                const width = 40; // Wider in 3D space too
                 const height = width * (canvas.height / canvas.width); // Match aspect
 
                 // NO MIRRORING:

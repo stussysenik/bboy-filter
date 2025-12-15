@@ -27,11 +27,15 @@ async function main() {
   // 1. Setup Camera
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      facingMode: 'user',
-      width: { ideal: 1920 },
+      facingMode: 'user', // "user" forces front camera on mobile
+      width: { ideal: 1920 }, // Try for 1080p
       height: { ideal: 1080 }
     },
-    audio: true
+    audio: {
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false
+    }
   });
 
   video.srcObject = stream;

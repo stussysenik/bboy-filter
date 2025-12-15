@@ -21,11 +21,15 @@ export class Recorder {
                 const combinedStream = new MediaStream(tracks);
 
                 // Prefer mp4 if available
+                // iOS/Safari often prefers 'video/mp4' with specific codecs, or 'video/webkit'
+                // Ensure we check strict codec profiles.
                 const mimeTypes = [
                         'video/mp4',
-                        'video/mp4;codecs=avc1',
+                        'video/mp4;codecs=avc1',      // Standard H.264
+                        'video/mp4;codecs=hvc1',      // HEVC (newer iOS)
                         'video/webm;codecs=vp9,opus',
-                        'video/webm'
+                        'video/webm',
+                        'video/webm;codecs=vp8,opus'
                 ];
 
                 let selectedMime = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || 'video/webm';
@@ -65,15 +69,33 @@ export class Recorder {
                 });
         }
 
-        save(blob) {
+        async save(blob) {
+                const ext = this.mediaRecorder.mimeType.includes('mp4') ? 'mp4' : 'webm';
+                const filename = `ar-filter-${Date.now()}.${ext}`;
+                const file = new File([blob], filename, { type: this.mediaRecorder.mimeType });
+
+                // Try Web Share API first (Mobile preferred)
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                                await navigator.share({
+                                        files: [file],
+                                        title: 'My AR Video',
+                                        text: 'Check out this AR filter video!'
+                                });
+                                return; // Success
+                        } catch (err) {
+                                console.warn("Share failed or canceled:", err);
+                                // Fallback to download if share fails (e.g. user cancelled)
+                        }
+                }
+
+                // Fallback: Direct Download Link (Desktop preferred)
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 document.body.appendChild(a);
                 a.style = 'display: none';
                 a.href = url;
-                // Use a generic name with basic timestamp
-                const ext = this.mediaRecorder.mimeType.includes('mp4') ? 'mp4' : 'webm';
-                a.download = `ar-filter-${Date.now()}.${ext}`;
+                a.download = filename;
                 a.click();
                 window.URL.revokeObjectURL(url);
         }
