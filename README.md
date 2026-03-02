@@ -1,6 +1,21 @@
+<div align="center">
+
 # Bboy Filter
 
-- this is the second attempt at making a bboy filter and this is the final result
-- working code all done in Antigravity
-- basic Arial styling functionality
-- swappable name tag options
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active-green?style=flat-square)
+
+[Live Demo](https://bboy-filter.vercel.app)
+
+</div>
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/stussysenik/bboy-filter.git
+cd bboy-filter
+npm install  # or bun install
+npm run dev
+```
